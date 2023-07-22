@@ -4,16 +4,29 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     public Text text;
-    private float elapsedTime;
-    private bool isRunning = true; // Flag to control the timer
+    private float startTime;
+    private bool isRunning = false; // Flag to control the timer
+
+    private void Start()
+    {
+        // Start the timer when the scene loads
+        StartTimer();
+    }
 
     private void Update()
     {
         if (isRunning)
         {
-            elapsedTime += Time.deltaTime;
-            text.text = elapsedTime.ToString("0.00  ");
+            float elapsedTime = Time.time - startTime;
+            text.text = elapsedTime.ToString("0.00");
         }
+    }
+
+    // Call this method to start the timer
+    public void StartTimer()
+    {
+        startTime = Time.time;
+        isRunning = true;
     }
 
     // Call this method to stop the timer
@@ -25,7 +38,6 @@ public class Timer : MonoBehaviour
     // Call this method to reset the timer
     public void ResetTimer()
     {
-        elapsedTime = 0f;
-        isRunning = true;
+        startTime = Time.time;
     }
 }

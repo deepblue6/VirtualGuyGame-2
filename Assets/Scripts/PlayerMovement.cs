@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode right;
     public KeyCode jump;
     
+    
 
 
     
@@ -38,6 +40,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update() // void means it does not return a value, it just runs code/commands
     {
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            SceneManager.LoadScene("Level 1.0.2");
+        }
+
         if (Input.GetKey(left))
         {
             dirX = -1;
@@ -51,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
             dirX = 0;
         }
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
-        if (Input.GetKeyDown(jump) && IsGrounded())
+        if ((Input.GetKeyDown(jump) || Input.GetKeyDown(KeyCode.W)) && IsGrounded())
         {
             jumpSoundEffect.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);

@@ -13,7 +13,6 @@ public class PlayerLife : MonoBehaviour
     private Animator anim;
     private Rigidbody2D rb;
     [SerializeField] private AudioSource deathSoundEffect; // Assign the death sound effect AudioClip in the Inspector
-    private bool isDead = false;
     public Timer timer; // Reference to the Timer script
     private GameObject timerObject; // Reference to the Timer GameObject
 
@@ -38,13 +37,11 @@ public class PlayerLife : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Trap"))
         {
-            isDead = true;
             Debug.Log("Player collided with a Trap!");
             StartCoroutine(Die());
+            hearts--;
         }
     }
-
-
 
     private void Update()
     {
@@ -53,7 +50,7 @@ public class PlayerLife : MonoBehaviour
 
     IEnumerator Die()
     {
-        hearts--;
+        //hearts--;
         deathSoundEffect.Play();
         anim.SetTrigger("death");
         GetComponent<PlayerMovement>().enabled = false;
@@ -63,18 +60,31 @@ public class PlayerLife : MonoBehaviour
 
         if (hearts > 0)
         {
-            transform.position = spawnpoint.transform.position;
+            // Respawn the player at the spawnpoint
+            RespawnPlayer();
         }
         else
         {
-            // Reset the timer and reload the scene
+            // Reset the player's hearts to 3 and reload the scene
+            
             timer.ResetTimer();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("Level 1.0.2");
+            hearts = 3;
         }
 
         anim.SetTrigger("respawn");
         rb.bodyType = RigidbodyType2D.Dynamic; // Unfreeze the Rigidbody to allow movement again
         GetComponent<PlayerMovement>().enabled = true;
     }
+
+    private void RespawnPlayer()
+    {
+        transform.position = spawnpoint.transform.position;
+
+        // Reset any necessary player-related variables here if needed
+        // For example, reset the player's health, ammo, etc.
+
+        // Reset any other game objects or systems that need to be reset after respawning the player
+        // For example, reset enemies, traps, puzzles, etc.
+    }
 }
-//

@@ -16,6 +16,11 @@ public class PlayerLife : MonoBehaviour
     public Timer timer; // Reference to the Timer script
     private GameObject timerObject; // Reference to the Timer GameObject
 
+    public Transform[] sawSpawnPoints;
+    public Transform[] platformSpawnPoints;
+    public List<Transform> sawsToReset = new List<Transform>();
+    public List<Transform> platformsToReset = new List<Transform>();
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -37,9 +42,7 @@ public class PlayerLife : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Trap"))
         {
-            Debug.Log("Player collided with a Trap!");
             StartCoroutine(Die());
-            hearts--;
         }
     }
 
@@ -50,26 +53,26 @@ public class PlayerLife : MonoBehaviour
 
     IEnumerator Die()
     {
-        //hearts--;
         deathSoundEffect.Play();
         anim.SetTrigger("death");
         GetComponent<PlayerMovement>().enabled = false;
         rb.velocity = Vector2.zero; // Set the Rigidbody's velocity to zero to stop movement
         rb.bodyType = RigidbodyType2D.Static; // Freeze the Rigidbody to prevent further movement
         yield return new WaitForSeconds(1.29f);
+        hearts--;
 
         if (hearts > 0)
         {
+             // Move the decrement here after the coroutine is finished
             // Respawn the player at the spawnpoint
             RespawnPlayer();
         }
         else
         {
             // Reset the player's hearts to 3 and reload the scene
-            
-            timer.ResetTimer();
-            SceneManager.LoadScene("Level 1.0.2");
             hearts = 3;
+            timer.ResetTimer();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         anim.SetTrigger("respawn");
@@ -80,9 +83,19 @@ public class PlayerLife : MonoBehaviour
     private void RespawnPlayer()
     {
         transform.position = spawnpoint.transform.position;
-
         // Reset any necessary player-related variables here if needed
         // For example, reset the player's health, ammo, etc.
+        // Reset saws to their spawn points
+        for (int i = 0; i < sawsToReset.Count; i++)
+        {
+            sawsToReset[i].position = sawSpawnPoints[i].position;
+        }
+
+        // Reset moving platforms to their spawn points
+        for (int i = 0; i < platformsToReset.Count; i++)
+        {
+            platformsToReset[i].position = platformSpawnPoints[i].position;
+        }
 
         // Reset any other game objects or systems that need to be reset after respawning the player
         // For example, reset enemies, traps, puzzles, etc.

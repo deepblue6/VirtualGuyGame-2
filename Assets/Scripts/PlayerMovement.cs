@@ -44,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
         {
             SceneManager.LoadScene("Level 1.0.2");
         }
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
 
         if (Input.GetKey(left))
         {

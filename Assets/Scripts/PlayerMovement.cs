@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
             dirX = 0;
         }
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
-        if ((Input.GetKeyDown(jump) || Input.GetKeyDown(KeyCode.W)) && IsGrounded())
+        if (Input.GetKeyDown(jump) && IsGrounded())
         {
             jumpSoundEffect.Play();
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);

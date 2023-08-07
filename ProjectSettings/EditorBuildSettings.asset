@@ -6,15 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Pixel Adventure 1/Scenes/Start Screen.unity
+    path: Assets/Scenes/Start Screen.unity
     guid: 40a41689ebfd3b24aabd8a47627808b5
   - enabled: 1
-    path: Assets/Game Versions/Level 1.0.2.unity
+    path: Assets/Scenes/Level 1.0.2.unity
     guid: aedbc2bbd40563b498b14730dcc7fe14
   - enabled: 1
-    path: Assets/Game Versions/Level 2.0.1.unity
+    path: Assets/Scenes/Level 2.0.1.unity
     guid: e76d4ad95b6788f4eb5e6abd94cb1382
   - enabled: 1
-    path: Assets/Pixel Adventure 1/Scenes/End Screen.unity
+    path: Assets/Scenes/End Screen.unity
     guid: b69382aa00f54554fbb4aba7f0ca2bb4
   m_configObjects: {}
